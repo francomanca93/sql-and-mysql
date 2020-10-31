@@ -22,6 +22,7 @@ Con el curso de SQL se conocerá el lenguaje de consulta estructurada que te per
     - [Introduccioón al curso](#introduccioón-al-curso)
     - [Instalación local de un RDBMS (Ubuntu)](#instalación-local-de-un-rdbms-ubuntu)
     - [La consola de MySQL](#la-consola-de-mysql)
+    - [¿Qué es una base de datos?](#qué-es-una-base-de-datos)
   - [CREATE](#create)
   - [INSERT](#insert)
   - [Bash y archivos SQL](#bash-y-archivos-sql)
@@ -73,6 +74,14 @@ Comandos usados en esta sección:
 
 > Todos los comandos deben de terminar con “;”
 
+### ¿Qué es una base de datos?
+
+Se llama **base de datos**, o también banco de datos, a un conjunto de información perteneciente a un mismo contexto, ordenada de modo sistemático para su posterior recuperación, análisis y/o transmisión.
+
+Es un lugar donde podemos ir almacenando datos puntuales de cualquier cantidad de cosas para después operar sobre esos datos y convertirlos en información. Esa información convertirla en operaciones de negocio y las operaciones de negocio convertirlas en dinero, crecimiento sabiduría lo que sea. **TODO RESIDE EN LOS DATOS Y CÓMO OPERAMOS SOBRE LOS DATOS**.
+
+> “Una base de datos es una conglomeración genérica de datos”.
+> 
 ## CREATE
 
 ## INSERT

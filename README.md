@@ -21,6 +21,7 @@ Con el curso de SQL se conocerá el lenguaje de consulta estructurada que te per
   - [Introducción al Curso de SQL y MySQL](#introducción-al-curso-de-sql-y-mysql)
     - [Introduccioón al curso](#introduccioón-al-curso)
     - [Instalación local de un RDBMS (Ubuntu)](#instalación-local-de-un-rdbms-ubuntu)
+    - [La consola de MySQL](#la-consola-de-mysql)
   - [CREATE](#create)
   - [INSERT](#insert)
   - [Bash y archivos SQL](#bash-y-archivos-sql)
@@ -50,6 +51,27 @@ Fue escrito en C y C++ y se integra perfectamente con los lenguajes de programac
 ### Instalación local de un RDBMS (Ubuntu)
 
 [Instalacción de MySQL 5.7 en Ubuntu 20.04](https://computingforgeeks.com/how-to-install-mysql-on-ubuntu-focal/)
+
+### La consola de MySQL
+
+La forma de conectarnos a nuestro servidor MySQL a través de nuestra terminal es:
+
+```shell
+$ mysql -h <dirección_de_nuestro_servidor> -u <usuario> -p -P <puerto>
+Enter password: <aquí introducirías tu password>?
+```
+
+Comandos usados en esta sección:
+
+- `show databases;` -> lista las bases de datos que tiene el servidor
+
+- `use name_database;`-> selecciona o se conecta a la base de datos a trabajar
+
+- `show tables;` -> muestra las tablas que contiene la base de datos
+
+- `select database();` -> muestra cual es la base de datos que tenemos seleccionada o en la que se esta trabajando.
+
+> Todos los comandos deben de terminar con “;”
 
 ## CREATE
 

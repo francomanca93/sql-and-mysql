@@ -20,6 +20,7 @@ Con el curso de SQL se conocerá el lenguaje de consulta estructurada que te per
 - [Curso de SQL y MySQL](#curso-de-sql-y-mysql)
   - [Introducción al Curso de SQL y MySQL](#introducción-al-curso-de-sql-y-mysql)
     - [Introduccioón al curso](#introduccioón-al-curso)
+    - [Instalación local de un RDBMS (Ubuntu)](#instalación-local-de-un-rdbms-ubuntu)
   - [CREATE](#create)
   - [INSERT](#insert)
   - [Bash y archivos SQL](#bash-y-archivos-sql)
@@ -45,6 +46,10 @@ Fue escrito en C y C++ y se integra perfectamente con los lenguajes de programac
 ![que_es_mysql](https://imgur.com/JgDLdW2.png)
 
 > NOTA: En el curso sólo se utilizará la consola para hacer consultas.
+
+### Instalación local de un RDBMS (Ubuntu)
+
+[Instalacción de MySQL 5.7 en Ubuntu 20.04](https://computingforgeeks.com/how-to-install-mysql-on-ubuntu-focal/)
 
 ## CREATE
 

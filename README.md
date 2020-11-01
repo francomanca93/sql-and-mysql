@@ -25,6 +25,10 @@ Con el curso de SQL se conocerá el lenguaje de consulta estructurada que te per
     - [¿Qué es una base de datos?](#qué-es-una-base-de-datos)
   - [CREATE](#create)
     - [Motores de bases de datos](#motores-de-bases-de-datos)
+    - [Comando CREATE](#comando-create)
+    - [Tipos de columnas / Creación de la tabla books](#tipos-de-columnas--creación-de-la-tabla-books)
+      - [Tipos de datos para columnas mas comunes](#tipos-de-datos-para-columnas-mas-comunes)
+      - [Creación de la tabla books](#creación-de-la-tabla-books)
   - [INSERT](#insert)
   - [Bash y archivos SQL](#bash-y-archivos-sql)
   - [SELECT](#select)
@@ -116,6 +120,53 @@ Dos tipos de tablas por defecto en MySQL:
 >
 > - **Catalogo**: crecerá en un orden lento, según las necesidades de la propia BD. (Listado de Usuarios, InnoDB)
 > - **Operación**: se enfocan a lectura, mayor acceso a disco duro. (Prestamos de libros, MyISAM).
+
+### Comando CREATE
+
+```sql
+CREATE TABLE IF NOT EXISTS nombre_tabla_en_plural (
+    ...nombre_de_columnas...
+);
+```
+
+### Tipos de columnas / Creación de la tabla books
+
+#### Tipos de datos para columnas mas comunes
+
+- `NOT NULL` permite que un campo no pueda estar sin completar, es distinto `NULO` a `EMPTY`.
+- `INTEGER UNSIGNED` permite que no existan signos, de forma que los numeros siempre seran positivos.
+
+>DATO IMPORTANTE: mysql no detecta cuando los datos de `AUTO_INCREMENT` han sido borrados, por tanto seguira con el ultimo dato que guardo.
+
+- `DEFAULT [valor por defecto]`: Si no introducimos ningun dato, mySQl automaticamente le dara al campo el valor de `DEFAULT`.
+- La diferencia entre `CHAR` y `VARCHAR` es que en el primer tipo de dato se asigna un valor en memoria por defecto dependiendo el tamaño de espacios que sean asignados, en cambio, `VARCHAR` va llenando esos campos en memoria conforme se tengan los datos en el campo.
+- `COMMENT`: Comentario a la columna que solo es visible para quien este manejando la base de datos
+- Para imagenes asignamos `VARCHAR`.
+
+> NOTA: no se guarda la imagen como tal, guardamos el url del origen de la imagen.
+
+- `FLOAT` es utilizado para calculos precisos, `DOUBLE` puede ser aplicado de forma simple a los precios de una libreria (en este caso).
+- `DOUBLE` (espacios que podremos llenar, espacios asignados para numeros decimales)
+- `TEXT` permite agregar texto, grandes cantidades de caracteres.
+- `TINYINT` Es un número entero con o sin signo. Con signo el rango de valores válidos va desde -128 a 127. Sin signo, el rango de valores es de 0 a 255. `TINYINT(1)` = BOOL (0 o 1), también llamado bandera.
+- `TINYTEXT`, `TEXT`, `BIGTEXT`: Textos de diferente cantidad de espacios soportados, de menor a mayor respectivamente.
+
+#### Creación de la tabla books
+
+```sql
+CREATE TABLE IF NOT EXISTS books (
+    `book_id` INTEGER UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+    `author_id` INTEGER UNSIGNED,
+    `title` VARCHAR(100) NOT NULL,
+    `year` INTEGER UNSIGNED NOT NULL DEFAULT 1900,
+    language VARCHAR(2) NOT NULL DEFAULT 'es' COMMENT 'ISO 639-1 Language',
+    `cover_url` VARCHAR(500),
+    `price` DOUBLE(6,2) NOT NULL DEFAULT 10.0,
+    `sellable` TINYINT(1) DEFAULT 1,
+    `copies` INTEGER NOT NULL DEFAULT 1,
+    `description` TEXT
+);
+```
 
 ## INSERT
 

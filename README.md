@@ -38,6 +38,7 @@ Con el curso de SQL se conocerá el lenguaje de consulta estructurada que te per
       - [Creación de la tabla clientes](#creación-de-la-tabla-clientes)
     - [DESAFIO | Creación de tabla operations](#desafio--creación-de-tabla-operations)
   - [INSERT](#insert)
+    - [Comando INSERT](#comando-insert)
   - [Bash y archivos SQL](#bash-y-archivos-sql)
   - [SELECT](#select)
   - [Consultas en MySQL](#consultas-en-mysql)
@@ -287,6 +288,42 @@ CREATE TABLE IF NOT EXISTS operations(
 ```
 
 ## INSERT
+
+### Comando INSERT
+
+> Buenas prácticas:
+> 1. Tener una buen modelo de bases de datos y un buen modelo de negocio que evite la duplicidad de información ya que esto nos ahorra el tiempo de procesamiento, ahorra en espacio.
+> 2. Realizar inserciones de 50 registros máximo. Esto no es necesariamente obligatorio pero funciona muy bien y esto se hace porque sí hay algún problema en la inserción sólo se pierde datos de 50 a 50.
+
+Formas de insertar:
+
+1. 
+```sql
+/*Existe varias formas de hacer insert, según las
+versiones de mysql que tengamos instalados estas son
+algunas de ellas*/
+INSERT INTO  authors (author_id,name,nationality) VALUES (NULL,'Juan Rulfo','MEX');
+INSERT INTO  authors (author_id,name,nationality) VALUES (NULL,'Gabriel García Máquez','COL');
+INSERT INTO  authors VALUES ('Juan Gabriel Vasquez','COL');
+```
+2. 
+```sql
+/*otra forma, que sí funciona*/
+INSERT INTO  `authors` (name,nationality)
+    VALUES  ('Juan Rulfo','MEX'),
+            ('Gabriel García Máquez','COL'),
+            ('Juan Gabriel Vasquez','COL'),
+            ('Julio Cortázar','COL'),
+            ('Isabelle Allende','CHI'),
+            ('Octavio Paz','MEX'),
+            ('Juan Carlos Onetti','URU');
+```
+3.
+```sql
+/*o si sabemos que hay un id que no existe podemos insertarlos juntos con su  id*/
+INSERT INTO  `authors` (author_id,name,nationality)
+    VALUES ('16','Pablo Neruda','MEX');
+```
 
 ## Bash y archivos SQL
 

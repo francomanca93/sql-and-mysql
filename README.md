@@ -24,6 +24,7 @@ Con el curso de SQL se conocerá el lenguaje de consulta estructurada que te per
     - [La consola de MySQL](#la-consola-de-mysql)
     - [¿Qué es una base de datos?](#qué-es-una-base-de-datos)
   - [CREATE](#create)
+    - [Motores de bases de datos](#motores-de-bases-de-datos)
   - [INSERT](#insert)
   - [Bash y archivos SQL](#bash-y-archivos-sql)
   - [SELECT](#select)
@@ -81,8 +82,40 @@ Se llama **base de datos**, o también banco de datos, a un conjunto de informac
 Es un lugar donde podemos ir almacenando datos puntuales de cualquier cantidad de cosas para después operar sobre esos datos y convertirlos en información. Esa información convertirla en operaciones de negocio y las operaciones de negocio convertirlas en dinero, crecimiento sabiduría lo que sea. **TODO RESIDE EN LOS DATOS Y CÓMO OPERAMOS SOBRE LOS DATOS**.
 
 > “Una base de datos es una conglomeración genérica de datos”.
-> 
+
 ## CREATE
+
+### Motores de bases de datos
+
+> Los **Motores de Bases de Datos**, son programas específicos, dedicados a servir de intermediarios entre las **bases de datos** y las **aplicaciones** que las utilizan como función principal, cada uno de estos cumple una tarea especifica, que van desde **crear** la Base de Datos hasta administrar el **uso y acceso** a esta.
+
+> Un **motor SQL** es un tipo de software que recopila e interpreta comandos SQL para que se puedan realizar las operaciones apropiadas en la base de datos relacional.
+
+Dos tipos de tablas por defecto en MySQL:
+
+- **MyISAM**: directa, sencilla, más rápida y las transacciones son completamente uno a uno. Sus caracteristicas son:
+
+  - Bloqueo de tabla
+  - Aumento del rendimiento si nuestra aplicación realiza un elevado número de consultas “Select”.
+  - Las tablas pueden llegar a dar problemas en la recuperación de datos.
+  - Permite hacer búsquedas full-text
+  - Menor consumo memoria RAM
+  - Mayor velocidad en general a la hora de recuperar datos.
+  - Ausencia de características de atomicidad ya que no tiene que hacer comprobaciones de la integridad referencial, ni bloquear las tablas para realizar las operaciones, esto nos lleva como los anteriores puntos a una mayor velocidad.
+
+- **InnoDB**: nueva, recuperable en caso de falla de disco duro pero es un poco más lenta.
+
+  - Bloqueo de registros
+  - Soporte de transacciones
+  - Rendimiento
+  - Concurrencia
+  - Confiabilidad
+  - Permite hacer búsquedas full-text (mysql >= 5.6)
+
+> En la vida real usamos las tablas con dos propósitos:
+>
+> - **Catalogo**: crecerá en un orden lento, según las necesidades de la propia BD. (Listado de Usuarios, InnoDB)
+> - **Operación**: se enfocan a lectura, mayor acceso a disco duro. (Prestamos de libros, MyISAM).
 
 ## INSERT
 

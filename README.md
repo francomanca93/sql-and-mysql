@@ -377,6 +377,20 @@ VALUES ('Vuelta al laberinto de la Soledad',
 
 ## Bash y archivos SQL
 
+Se pueden traer grandes bases de datos sin tener que cargar todo manualmente desde la terminal bash directamente. Lo que hacemos es ir a la carpeta contenedora de los archivos desde la terminal y con el siguiente comando traemos los archivos sql:
+
+1. Crear base de datos desde cero:
+
+```shell
+mysql -u root -p < all_schema.sql
+```
+
+2. Traer todos los datos a la base de datos creada.
+
+```shell
+mysql -u root -p -D proyecto_platzi < all_data.sql
+```
+
 ## SELECT
 
 ## Consultas en MySQL

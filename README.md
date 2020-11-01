@@ -40,6 +40,7 @@ Con el curso de SQL se conocerá el lenguaje de consulta estructurada que te per
   - [INSERT](#insert)
     - [Comando INSERT](#comando-insert)
     - [Comando on duplicate key](#comando-on-duplicate-key)
+    - [Inserción de datos usando queries anidados](#inserción-de-datos-usando-queries-anidados)
   - [Bash y archivos SQL](#bash-y-archivos-sql)
   - [SELECT](#select)
   - [Consultas en MySQL](#consultas-en-mysql)
@@ -347,6 +348,32 @@ Opciones:
 
   - `ON DUPLICATE KEY UPDATE active = 0;`
   - `ON DUPLICATE KEY UPDATE active = VALUES(active);`
+
+### Inserción de datos usando queries anidados
+
+Tenemos un archivo CVS con la siguiente información
+
+```text
+El laberinto de la Soledad | Octavio Paz | 1955
+Vuelta al laberinto de la Soledad | Octavio Paz | 1960
+```
+
+Mediante un script de Python podemos obtener estos datos e ir iterando para las insercciones, pero el problema surge en que nuestra tabla de books tenemos solo el title y el year, el nombre del autor lo tenemos en otra tabla llamada authors.
+
+Supongamos que insertamos un libro, pero como el autor es de tipo integer por referencia lógica a la tabla authors, en un primer momento tenemos que hacer un select a la tabla authors, fijarse que id tiene el autor en cuestión y regresar a insertar el registro
+
+```sql
+INSERT INTO books (title, author_id) VALUES ('El laberinto de la Soledad', 6);
+```
+
+Sin embargo al usar INSERT con SELECT anidados, podemos saltarnos el paso de hacer el select previo a la tabla de autores y colocarlo internamente en la consulta de insercción. Para el campo author_id, su valor lo obtengo de una subconsulta, de ahí que este entre parentesis, para que se haga primero:
+
+```sql
+INSERT INTO books (title, author_id, year)
+VALUES ('Vuelta al laberinto de la Soledad',
+(SELECT author_id FROM authors WHERE name = 'Octavio Paz'),
+1960);
+```
 
 ## Bash y archivos SQL
 

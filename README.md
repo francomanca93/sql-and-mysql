@@ -33,6 +33,9 @@ Con el curso de SQL se conocerá el lenguaje de consulta estructurada que te per
       - [Tips/Recomendaciones](#tipsrecomendaciones)
       - [Comandos sql](#comandos-sql)
       - [Creación de la tabla authors](#creación-de-la-tabla-authors)
+    - [Tipos de columnas usados | Creación de la tabla clientes](#tipos-de-columnas-usados--creación-de-la-tabla-clientes)
+      - [Tipos de datos usados | columnas de buena práctica](#tipos-de-datos-usados--columnas-de-buena-práctica)
+      - [Creación de la tabla clientes](#creación-de-la-tabla-clientes)
   - [INSERT](#insert)
   - [Bash y archivos SQL](#bash-y-archivos-sql)
   - [SELECT](#select)
@@ -220,6 +223,50 @@ CREATE TABLE IF NOT EXISTS authors(
     `name` VARCHAR(100) NOT NULL, 
     `nationality` VARCHAR(3)
 );
+```
+
+### Tipos de columnas usados | Creación de la tabla clientes
+
+#### Tipos de datos usados | columnas de buena práctica
+
+- El no colocar `AUTO_INCREMENT` a la columna que es PRIMARY KEY simplemente vuelve el proceso de asignar id a una forma manual o se puede asignar desde otra capa de negocios.
+
+- `UNIQUE`, la columna que tenga el constraint **unique** garantiza que el valor que se guarda en esa columna sea único
+
+- `TIMESTAMP` Está basado en el número **epoch** que es el **1 enero de 1970** hasta la fecha y es donde se determina el inicio de las computadoras. Es un número entero que se guarda en segundos y permite hacer operaciones sobre él.
+
+- `DATETIME` Este tipo de dato puede guardar cualquier valor de tipo fecha sin restricción. Incluso anterior a nuestra era. Por eso las fechas de nacimiento de usuarios debe utilizar este valor para garantizar que podemos registrarlos con la fecha adecuada.
+
+> TIMESTAMP vs DATETIME: hay que resaltar que:
+> 1. `TIMESTAMP` “NO PUEDE HACER TODO LO DE `DATETIME` pero `DATETIME` SÍ PUEDE HACERLO DE UN `TIMESTAMP`”.
+> 2. `DATETIME` no está guardado en segundos y no es tan eficiente para hacer cálculos.
+
+- `active`
+
+Es buena práctica no eliminar registros de una bases de datos es por ello que se crea una columna como active que es un valor booleano. Dicho valor sirve para para decir si el registro está activo o no.
+
+- `created_ad` y `updated_ad`
+
+Es buena práctica tener una columna que permite saber el momento exacto en el que se crea un registro o se actualiza. Este tipo de dato se comporta más como una meta-información y nos puede ayudar, por ejemplo, a cuántos usuarios fueron creados en una fecha en específico, saber cuando una tupla se actualizó, etc.
+
+- `created_ad`
+
+Es una columna de buena práctica que permite saber cuando se creó un registro. Está utilizará un conjunto de propiedades llamada entre ella se colocará `DEFAULT CURRENT_TIMESTAMP` . Cuando se realiza un insert sí el valor de esta columna viene vacío colocará en la tupla el valor de la fecha en que se creó de manera automática .
+
+#### Creación de la tabla clientes
+
+```sql
+CREATE TABLE clients(
+    `client_id` INTEGER UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+    `name` VARCHAR(50) NOT NULL,
+    `email` VARCHAR(100) NOT NULL UNIQUE,
+    `birthdate` DATETIME,
+    `gender` ENUM('M', 'F', 'ND') NOT NULL,
+    `active` TINYINT(1) NOT NULL DEFAULT 1,
+    `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+        ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB AUTO_INCREMENT=101 DEFAULT CHARSET=utf8;
 ```
 
 ## INSERT

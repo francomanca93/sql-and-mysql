@@ -29,6 +29,10 @@ Con el curso de SQL se conocerá el lenguaje de consulta estructurada que te per
     - [Tipos de columnas / Creación de la tabla books](#tipos-de-columnas--creación-de-la-tabla-books)
       - [Tipos de datos para columnas mas comunes](#tipos-de-datos-para-columnas-mas-comunes)
       - [Creación de la tabla books](#creación-de-la-tabla-books)
+    - [Tipos de columnas / Creación de la tabla authors](#tipos-de-columnas--creación-de-la-tabla-authors)
+      - [Tips/Recomendaciones](#tipsrecomendaciones)
+      - [Comandos sql](#comandos-sql)
+      - [Creación de la tabla authors](#creación-de-la-tabla-authors)
   - [INSERT](#insert)
   - [Bash y archivos SQL](#bash-y-archivos-sql)
   - [SELECT](#select)
@@ -165,6 +169,56 @@ CREATE TABLE IF NOT EXISTS books (
     `sellable` TINYINT(1) DEFAULT 1,
     `copies` INTEGER NOT NULL DEFAULT 1,
     `description` TEXT
+);
+```
+
+### Tipos de columnas / Creación de la tabla authors
+
+#### Tips/Recomendaciones
+
+- La tablas de bases datos necesitan una `PRIMARY KEY` osea un “id” para **identificar los registros**.
+
+> **Es buena práctica**: MySQL permite minúsculas y mayúsculas en el nombre de tablas y sentencias sql, pero es recomendable colocar en mayúsculas las sentencias(palabras reservadas) sql y todo lo relaciona con lo propio de MySQL y en minúscula el nombre de tablas y columnas.
+
+- Como la relación entre tablas es lógica y se realiza mediante los id, en la tabla en donde se referencia la columna debe ser del mismo tipo de datos.
+
+- **El error vs Warnings**: la diferencia entre estos dos es que el error rompe cualquier flujo de trabajo que tengamos en nuestra aplicación mientras que el warnnigs nos muestra una advertencia que no rompe el flujo de trabajo workflow.
+
+- Cuando queremos usar una palabra reservada del lenguaje como nombre de alguna columna lo colocamos encerrado entre comillas de acento ejemplo: year.
+
+#### Comandos sql
+
+> TENER **MUCHO CUIDADO** CON EL SIGUIENTE COMANDO **`DROP`**, **PODEMOS PERDER MUCHO TIEMPO/DINERO** SI LO HACEMOS POR ERROR. **VERIFICAR SIEMPRE**.
+
+- `DROP TABLE name_table;` borra la estructura de la tabla de bases de datos y su contenido.
+
+```sql
+/*Eliminar una tabla*/
+DROP TABLE `authors`;
+```
+
+- `DESCRIBE name_table;` muestra la estructura de nuestra tabla. Nos muestra las columnas: field, type, Null, Key, Default, Extra.
+
+```sql
+/*describe el contenido (columnas) de la tabla books*/
+DESCRIBE `books`;
+```
+
+- `DESC name_table;` es un acrónimo de `DESCRIBE` que realiza la misma función de describir la estructura de la tabla.
+
+- `SHOW FULL COLUMNS FROM name_table;` Esta función describe la estructura de la bases de datos incluyendo más información cómo: field, Type, Collation, Null, Key, Default, Extra, Privileges, comment.
+
+```sql
+SHOW FULL COLUMNS FROM `books`;
+```
+
+#### Creación de la tabla authors
+
+```sql
+CREATE TABLE IF NOT EXISTS authors(
+    `author_id` INTEGER UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+    `name` VARCHAR(100) NOT NULL, 
+    `nationality` VARCHAR(3)
 );
 ```
 

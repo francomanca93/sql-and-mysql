@@ -43,6 +43,7 @@ Con el curso de SQL se conocerá el lenguaje de consulta estructurada que te per
     - [Inserción de datos usando queries anidados](#inserción-de-datos-usando-queries-anidados)
   - [Bash y archivos SQL](#bash-y-archivos-sql)
   - [SELECT](#select)
+    - [Su majestad el SELECT | Comandos básicos](#su-majestad-el-select--comandos-básicos)
   - [Consultas en MySQL](#consultas-en-mysql)
 
 # Curso de SQL y MySQL
@@ -392,5 +393,70 @@ mysql -u root -p -D proyecto_platzi < all_data.sql
 ```
 
 ## SELECT
+
+### Su majestad el SELECT | Comandos básicos
+
+- Traer solo una columna especifica (en este caso la columna “name”):
+
+```sql
+SELECT name FROM clients;
+```
+
+- Traer varias columnas especificas (en este caso la columna “name” y “gender”):
+
+```sql
+SELECT name, email, gender FROM clients;
+```
+
+- Limitar el numero de resultados (en este caso maximo 10 resultados):
+
+```sql
+SELECT name, email, gender FROM clients LIMIT 10;
+```
+
+- Condicionar los resultados a una caracteristica (en este caso todos los resultados que tengan gender con el valor “M”):
+
+```sql
+SELECT name, email, gender FROM clients WHERE gender='M';
+```
+
+- Listar el año de nacimientos de los clientes, con la función YEAR()
+
+```sql
+SELECT YEAR(birthdate) FROM clients;
+```
+
+- Mostrar el año actual
+
+```sql
+SELECT YEAR(NOW());
+```
+
+- Listar los 10 primeros resultados de las edades de los clientes
+
+```sql
+SELECT YEAR(NOW()) - YEAR(birthdate) FROM clients LIMIT 10;
+```
+
+- Listar nombre y edad de los 10 primeros clientes
+
+```sql
+SELECT name, YEAR(NOW()) - YEAR(birthdate) FROM clients LIMIT 10;
+```
+
+- Listar clientes que coincidan con el nombre de "Saave"
+
+```sql
+SELECT * FROM clients WHERE name LIKE '%Saave%';
+```
+
+- Utilizar funciones para obtener datos especificos (en este caso todas las Mujeres que en su nombre tengan la cadena “Lop”), usando alias para nombrar la función como 'edad':
+
+```sql
+SELECT name, email, YEAR(NOW()) - YEAR(birthdate) AS edad, gender
+FROM clients
+WHERE gender='F'
+    AND name LIKE '%Lop%';
+```
 
 ## Consultas en MySQL

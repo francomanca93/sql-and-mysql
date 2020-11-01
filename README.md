@@ -36,6 +36,7 @@ Con el curso de SQL se conocerá el lenguaje de consulta estructurada que te per
     - [Tipos de columnas usados | Creación de la tabla clientes](#tipos-de-columnas-usados--creación-de-la-tabla-clientes)
       - [Tipos de datos usados | columnas de buena práctica](#tipos-de-datos-usados--columnas-de-buena-práctica)
       - [Creación de la tabla clientes](#creación-de-la-tabla-clientes)
+    - [DESAFIO | Creación de tabla operations](#desafio--creación-de-tabla-operations)
   - [INSERT](#insert)
   - [Bash y archivos SQL](#bash-y-archivos-sql)
   - [SELECT](#select)
@@ -267,6 +268,22 @@ CREATE TABLE clients(
     `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
         ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB AUTO_INCREMENT=101 DEFAULT CHARSET=utf8;
+```
+
+### DESAFIO | Creación de tabla operations
+
+```sql
+CREATE TABLE IF NOT EXISTS operations(
+    `operation_id` INTEGER UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+    `book_id` INTEGER UNSIGNED NOT NULL,
+    `client_id` INTEGER UNSIGNED NOT NULL,
+    `operation_type` ENUM('B', 'R', 'S') NOT NULL COMMENT 'B=BORROWED, R=RETURNED, S=SOLD',
+    /*[prestado(operacion no finializada), devuelto(oper finalizada) o vendido(oper finalizada)],*/
+    `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP 
+        ON UPDATE CURRENT_TIMESTAMP,
+    `finished` TINYINT(1) NOT NULL DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 ```
 
 ## INSERT

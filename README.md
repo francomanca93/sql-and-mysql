@@ -39,6 +39,7 @@ Con el curso de SQL se conocerá el lenguaje de consulta estructurada que te per
     - [DESAFIO | Creación de tabla operations](#desafio--creación-de-tabla-operations)
   - [INSERT](#insert)
     - [Comando INSERT](#comando-insert)
+    - [Comando on duplicate key](#comando-on-duplicate-key)
   - [Bash y archivos SQL](#bash-y-archivos-sql)
   - [SELECT](#select)
   - [Consultas en MySQL](#consultas-en-mysql)
@@ -324,6 +325,28 @@ INSERT INTO  `authors` (name,nationality)
 INSERT INTO  `authors` (author_id,name,nationality)
     VALUES ('16','Pablo Neruda','MEX');
 ```
+
+### Comando on duplicate key
+
+`ON DUPLICATE KEY` sirve para insertar un dato que ya esta creado pero queremos actualizar un atributo de ese dato por uno nuevo.
+
+```sql
+INSERT INTO `clients`(name, email, birthdate, gender, active)
+VALUES ('Pedro Sanchez','Pedro.78522059J@random.names','1992-01-31','M', 0)
+ON DUPLICATE KEY UPDATE active = VALUES(active)
+```
+
+Opciones:
+
+1. `ON DUPLICATE KEY IGNORE ALL` esto indica que si hay algun error, lo va a ignorar y va a correr la sentencia.
+
+> **NUNCA UTILIZAR, EVITAR A TODA COSTA.**
+> Los errores están ahi para algo, sin embargo la recomendación es NUNCA usar IGNORE ALL en una sentencia SQL de MYSQL.
+
+2. `ON DUPLICATE KEY UPDATE active = VALUES(active)` para cambiarle el valor de activo, de 1 a 0. Esta sentencia con la palabra UPDATE nos permite actualizar la información por alguna otra. Hay hos formas de hacer esto:
+
+  - `ON DUPLICATE KEY UPDATE active = 0;`
+  - `ON DUPLICATE KEY UPDATE active = VALUES(active);`
 
 ## Bash y archivos SQL
 

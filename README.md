@@ -45,8 +45,16 @@ Con el curso de SQL se conocerá el lenguaje de consulta estructurada que te per
   - [SELECT](#select)
     - [Su majestad el SELECT | Comandos básicos](#su-majestad-el-select--comandos-básicos)
     - [Comando JOIN](#comando-join)
-      - [Resumen JOIN's](#resumen-joins)
     - [Left JOIN](#left-join)
+    - [Tipos de JOIN | Resumen](#tipos-de-join--resumen)
+      - [1. Inner Join](#1-inner-join)
+      - [2. Left Join](#2-left-join)
+      - [3. Right Join](#3-right-join)
+      - [4. Outer Join](#4-outer-join)
+      - [5. Left excluding join](#5-left-excluding-join)
+      - [6. Right Excluding join](#6-right-excluding-join)
+      - [7. Outer excluding join](#7-outer-excluding-join)
+      - [Resumen](#resumen)
   - [Consultas en MySQL](#consultas-en-mysql)
 
 # Curso de SQL y MySQL
@@ -533,18 +541,6 @@ WHERE a.author_id BETWEEN 1 AND 5
 ORDER BY a.author_id DESC;
 ```
 
-#### Resumen JOIN's
-
-![simples_join](https://imgur.com/gShbqsw.png)
-
-![join_command_1](https://imgur.com/hy5ybTz.png)
-
-![join_command_2](https://imgur.com/6W8q7Vb.png)
-
-![join_command_3](https://imgur.com/K0UvZM2.png)
-
-![join_command_4](https://imgur.com/Os3DvYq.png)
-
 ### Left JOIN
 
 En la sección se vio el uso de INNER JOIN, en esta sección veremos el uso de LEFT JOIN.
@@ -625,5 +621,139 @@ Salida:
 +-----------+--------------------+-------------+------------------+
 5 rows in set (0.00 sec)
 ```
+
+### Tipos de JOIN | Resumen
+
+En las secciones anterior estuvimos hablando de dos tipos de joins, **inner y left**, que podemos usar cuando estemos trabajando con consultas a nuestras bases de datos.
+
+Existen diferentes formas en las que se pueden unir las tablas en nuestras consultas y de acuerdo con esta unión se va a mostrar información, y es importante siempre tener clara esta relación.
+
+En esta sección verémos gráficamente 7 diferentes tipos de uniones que puedes realizar.
+
+Usar correctamente estas uniones puede reducir el tiempo de ejecución de tus consultas y mejorar el rendimiento de tus aplicaciones.
+
+Cuando hacemos uniones en las consultas para seleccionar información, estamos trabajando con tablas, estas tablas podemos verlas como conjuntos de información, de forma que podemos asimilar los joins entre tablas como uniones e intersecciones entre conjuntos.
+
+Supongamos que contamos con dos conjuntos, el conjunto A y el conjunto B, o, la tabla A y la tabla B. Sobre estos conjuntos veamos cuál es el resultado si aplicamos diferentes tipos de join.
+
+#### 1. Inner Join
+
+Esta es la forma mas fácil de seleccionar información de diferentes tablas, es tal vez la que mas usas a diario en tu trabajo con bases de datos. Esta union retorna todas las filas de la tabla A que coinciden en la tabla B. Es decir aquellas que están en la tabla A Y en la tabla B, si lo vemos en conjuntos la intersección entre la tabla A y la B.
+
+![inner_join](https://imgur.com/0UYpY7R.png)
+
+Esto lo podemos implementar de esta forma cuando estemos escribiendo las consultas:
+
+```sql
+SELECT <columna_1> , <columna_2>,  <columna_3> ... <columna_n> 
+FROM Tabla_A AS A
+INNER JOIN Tabla_B AS B
+  ON A.pk = B.pk
+```
+
+#### 2. Left Join
+
+Esta consulta retorna todas las filas que están en la tabla A y ademas si hay coincidencias de filas en la tabla B también va a traer esas filas.
+
+![left_join](https://imgur.com/kSClrnI.png)
+
+Esto lo podemos implementar de esta forma cuando estemos escribiendo las consultas:
+
+```SQL
+SELECT <columna_1> , <columna_2>,  <columna_3> ... <columna_n>
+FROM Tabla_A AS A
+LEFT JOIN Tabla_B AS B
+  ON A.pk = B.pk
+```
+
+#### 3. Right Join
+
+Esta consulta retorna todas las filas de la tabla B y ademas si hay filas en la tabla A que coinciden también va a traer estas filas de la tabla A.
+
+![right_join](https://imgur.com/3NxcbZF.png)
+
+Esto lo podemos implementar de esta forma cuando estemos escribiendo las consultas:
+
+```sql
+SELECT <columna_1> , <columna_2>,  <columna_3> ... <columna_n>
+FROM Tabla_A AS A
+RIGHT JOIN Tabla_B AS B
+  ON A.pk = B.pk
+```
+
+#### 4. Outer Join
+
+Este join retorna TODAS las filas de las dos tablas. Hace la union entre las filas que coinciden entre la tabla A y la tabla B.
+
+![outer_join](https://imgur.com/YzeWIiR.png)
+
+Esto lo podemos implementar de esta forma cuando estemos escribiendo las consultas:
+
+```sql
+SELECT <columna_1> , <columna_2>,  <columna_3> ... <columna_n>
+FROM Tabla_A AS A
+FULL OUTER JOIN Tabla_B AS B
+  ON A.pk = B.pk
+```
+
+#### 5. Left excluding join
+
+Esta consulta retorna todas las filas de la tabla de la izquierda, es decir la tabla A que no tienen ninguna coincidencia con la tabla de la derecha, es decir la tabla B.
+
+![left_excluding_join](https://imgur.com/IzBm6Qt.png)
+
+Esto lo podemos implementar de esta forma cuando estemos escribiendo las consultas:
+
+```sql
+SELECT <columna_1> , <columna_2>,  <columna_3> ... <columna_n>
+FROM Tabla_A AS A
+LEFT JOIN Tabla_B AS B
+  ON A.pk = B.pk
+WHERE B.pk IS NULL
+```
+
+#### 6. Right Excluding join
+
+Esta consulta retorna todas las filas de la tabla de la derecha, es decir la tabla B que no tienen coincidencias en la tabla de la izquierda, es decir la tabla A.
+
+![right_Excluding_join](https://imgur.com/BdsPDB2.png)
+
+Esto lo podemos implementar de esta forma cuando estemos escribiendo las consultas:
+
+```sql
+SELECT <columna_1> , <columna_2>,  <columna_3> ... <columna_n>
+FROM Tabla_A AS A
+RIGHT JOIN Tabla_B AS B
+  ON A.pk = B.pk
+WHERE A.pk IS NULL
+```
+
+#### 7. Outer excluding join
+
+Esta consulta retorna todas las filas de la tabla de la izquierda, tabla A, y todas las filas de la tabla de la derecha, tabla B que no coinciden.
+
+![outer_excluding_join](https://imgur.com/JgWdifp.png)
+
+Esto lo podemos implementar de esta forma cuando estemos escribiendo las consultas:
+
+```sql
+SELECT <select_list>
+FROM Table_A AS A
+FULL OUTER JOIN Table_B AS B
+  ON A.Key = B.Key
+WHERE A.Key IS NULL OR B.Key IS NULL
+```
+
+#### Resumen
+
+![simples_join](https://imgur.com/gShbqsw.png)
+
+![join_command_1](https://imgur.com/hy5ybTz.png)
+
+![join_command_2](https://imgur.com/6W8q7Vb.png)
+
+![join_command_3](https://imgur.com/K0UvZM2.png)
+
+![join_command_4](https://imgur.com/Os3DvYq.png)
 
 ## Consultas en MySQL

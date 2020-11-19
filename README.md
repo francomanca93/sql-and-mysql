@@ -522,6 +522,17 @@ WHERE c.gender = 'M'
   AND t.type IN ('sell', 'lend');
 ```
 
+- JOIN y order by (por defecto es ASC)
+
+```sql
+SELECT a.author_id, a.name AS 'author name', a.nationality, b.title AS 'title of book'
+FROM authors AS a
+JOIN books AS b
+  ON b.author_id = a.author_id
+WHERE a.author_id BETWEEN 1 AND 5
+ORDER BY a.author_id DESC;
+```
+
 #### Resumen JOIN's
 
 ![simples_join](https://imgur.com/gShbqsw.png)

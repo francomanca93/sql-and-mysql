@@ -44,6 +44,8 @@ Con el curso de SQL se conocerá el lenguaje de consulta estructurada que te per
   - [Bash y archivos SQL](#bash-y-archivos-sql)
   - [SELECT](#select)
     - [Su majestad el SELECT | Comandos básicos](#su-majestad-el-select--comandos-básicos)
+    - [Comando JOIN](#comando-join)
+      - [Resumen JOIN's](#resumen-joins)
   - [Consultas en MySQL](#consultas-en-mysql)
 
 # Curso de SQL y MySQL
@@ -458,5 +460,77 @@ FROM clients
 WHERE gender='F'
     AND name LIKE '%Lop%';
 ```
+
+### Comando JOIN
+
+Algunos de los JOIN's usados en la clase fueron:
+
+- Listar todos los autores con ID entre 1 y 5 con los filtro mayor y menor igual
+
+```sql
+SELECT * FROM authors WHERE author_id > 0 AND author_id <= 5;
+```
+
+- Listar todos los autores con ID entre 1 y 5 con el filtro BETWEEN
+
+```sql
+SELECT * FROM authors WHERE author_id BETWEEN 1 AND 5;
+```
+
+- Listar los libros con filtro de author_id entre 1 y 5
+
+```sql
+SELECT book_id, author_id, title FROM books WHERE author_id BETWEEN 1 AND 5;
+```
+
+- Listar nombre y titulo de libros mediante el JOIN de las tablas books y authors
+
+```sql
+SELECT b.book_id, a.name, a.author_id, b.title
+FROM books AS b
+JOIN authors AS a
+  ON a.author_id = b.author_id
+WHERE a.author_id BETWEEN 1 AND 5;
+```
+
+- Listar transactions con detalle de nombre, titulo y tipo. Con los filtro genero = F y tipo = Vendido. Haciendo join entre transactions, books y clients.
+
+```sql
+SELECT c.name, b.title, t.type
+FROM transactions AS t
+JOIN books AS b
+  ON t.book_id = b.book_id
+JOIN clients AS c
+  ON t.client_id = c.client_id
+WHERE c.gender = 'F'
+  AND t.type = 'sell';
+```
+
+- Listar transactions con detalle de nombre, titulo, autoor y tipo. Con los filtro genero = M y de tipo = Vendido y Devuelto. Haciendo join entre transactions, books, clients y authors.
+
+```sql
+SELECT c.name, b.title, a.name AS 'author of book', t.type
+FROM transactions AS t
+JOIN books AS b
+  ON t.book_id = b.book_id
+JOIN clients AS c
+  ON t.client_id = c.client_id
+JOIN authors AS a
+  ON b.author_id = a.author_id
+WHERE c.gender = 'M'
+  AND t.type IN ('sell', 'lend');
+```
+
+#### Resumen JOIN's
+
+![simples_join](https://imgur.com/gShbqsw.png)
+
+![join_command_1](https://imgur.com/hy5ybTz.png)
+
+![join_command_2](https://imgur.com/6W8q7Vb.png)
+
+![join_command_3](https://imgur.com/K0UvZM2.png)
+
+![join_command_4](https://imgur.com/Os3DvYq.png)
 
 ## Consultas en MySQL

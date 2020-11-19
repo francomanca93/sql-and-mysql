@@ -538,6 +538,27 @@ WHERE c.gender = 'M'
 
 En la sección se vio el uso de INNER JOIN, en esta sección veremos el uso de LEFT JOIN.
 
+- Uso del JOIN implícito
+
+```sql
+SELECT b.title, a.name
+FROM authors AS a, books AS b
+WHERE a.author_id = b.author_id
+LIMIT 10;
+```
+
+- Uso del JOIN explícito
+
+```sql
+SELECT b.title, a.name
+FROM books AS b
+INNER JOIN authors AS a
+  ON a.author_id = b.author_id
+LIMIT 10;
+```
+
+Ambos casos son iguales, pero el segundo se puede leer claramente mas rapido.
+
 - LEFT JOIN para traer datos incluso que no existen, como el caso del author_id = 4 que no tene ningún libro registrado.
 
 ```sql

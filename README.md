@@ -46,6 +46,7 @@ Con el curso de SQL se conocerá el lenguaje de consulta estructurada que te per
     - [Su majestad el SELECT | Comandos básicos](#su-majestad-el-select--comandos-básicos)
     - [Comando JOIN](#comando-join)
       - [Resumen JOIN's](#resumen-joins)
+    - [Left JOIN](#left-join)
   - [Consultas en MySQL](#consultas-en-mysql)
 
 # Curso de SQL y MySQL
@@ -532,5 +533,65 @@ WHERE c.gender = 'M'
 ![join_command_3](https://imgur.com/K0UvZM2.png)
 
 ![join_command_4](https://imgur.com/Os3DvYq.png)
+
+### Left JOIN
+
+En la sección se vio el uso de INNER JOIN, en esta sección veremos el uso de LEFT JOIN.
+
+- LEFT JOIN para traer datos incluso que no existen, como el caso del author_id = 4 que no tene ningún libro registrado.
+
+```sql
+SELECT a.author_id, a.name AS 'author name', a.nationality, b.title AS 'title of book'
+FROM authors AS a
+LEFT JOIN books AS b
+  ON b.author_id = a.author_id
+WHERE a.author_id BETWEEN 1 AND 5
+ORDER BY a.author_id;
+```
+
+Salida:
+
+```txt
++-----------+--------------------+-------------+---------------------------------------+
+| author_id | author name        | nationality | title of book                         |
++-----------+--------------------+-------------+---------------------------------------+
+|         1 | Sam Altman         | USA         | The Startup Playbook                  |
+|         1 | Sam Altman         | USA         | The Startup Playbook                  |
+|         2 | Freddy Vega        | COL         | NULL                                  |
+|         3 | Arthur Conan Doyle | GBR         | Estudio en escarlata                  |
+|         3 | Arthur Conan Doyle | GBR         | The - Vol I Complete Sherlock Holmes  |
+|         3 | Arthur Conan Doyle | GBR         | The - Vol II Complete Sherlock Holmes |
+|         4 | Chuck Palahniuk    | USA         | NULL                                  |
+|         5 | Juan Rulfo         | MEX         | El llano en llamas                    |
++-----------+--------------------+-------------+---------------------------------------+
+8 rows in set (0.00 sec)
+```
+
+- Contar número de libros tiene un autor. Con COUNT (contar), es necesario tener un GROUP BY (agrupado por un criterio)
+
+```sql
+SELECT a.author_id, a.name AS 'author name', a.nationality, COUNT(b.book_id)
+FROM authors AS a
+LEFT JOIN books AS b
+  ON b.author_id = a.author_id
+WHERE a.author_id BETWEEN 1 AND 5
+GROUP BY a.author_id
+ORDER BY a.author_id;
+```
+
+Salida:
+
+```txt
++-----------+--------------------+-------------+------------------+
+| author_id | author name        | nationality | COUNT(b.book_id) |
++-----------+--------------------+-------------+------------------+
+|         1 | Sam Altman         | USA         |                2 |
+|         2 | Freddy Vega        | COL         |                0 |
+|         3 | Arthur Conan Doyle | GBR         |                3 |
+|         4 | Chuck Palahniuk    | USA         |                0 |
+|         5 | Juan Rulfo         | MEX         |                1 |
++-----------+--------------------+-------------+------------------+
+5 rows in set (0.00 sec)
+```
 
 ## Consultas en MySQL

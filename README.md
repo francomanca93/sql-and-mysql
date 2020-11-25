@@ -55,6 +55,7 @@ Con el curso de SQL se conocerá el lenguaje de consulta estructurada que te per
       - [6. Right Excluding join](#6-right-excluding-join)
       - [7. Outer excluding join](#7-outer-excluding-join)
       - [Resumen](#resumen)
+    - [Casos de Negocios](#casos-de-negocios)
   - [Consultas en MySQL](#consultas-en-mysql)
 
 # Curso de SQL y MySQL
@@ -755,5 +756,66 @@ WHERE A.Key IS NULL OR B.Key IS NULL
 ![join_command_3](https://imgur.com/K0UvZM2.png)
 
 ![join_command_4](https://imgur.com/Os3DvYq.png)
+
+### Casos de Negocios
+
+1. ¿Que nacionalidades hay?
+
+```sql
+-- Me va a traer todos los valores de las columnas que encuentre.
+SELECT nationality FROM authors;
+
+-- Me traerá las diferentes nacionalidades unicamente
+SELECT DISTINCT nationality FROM authors;
+
+-- Si lo pasamos el parametro ORDER BY lo ordenará
+SELECT DISTINCT nationality FROM authors ORDER BY nationality;
+```
+
+2. ¿Cuantos escritores hay de cada nacionalidad?
+
+```sql
+-- Cuantos escritores hay por cada nacionalidad ordenados de mayor a menor cantidad
+SELECT nationality , COUNT(author_id) TOTAL
+FROM authors
+GROUP BY nationality
+ORDER BY TOTAL DESC;
+
+-- Igual que la query anterior pero le agregamos un segundo orden que es por nacionalidad
+SELECT nationality , COUNT(author_id) TOTAL
+FROM authors
+GROUP BY nationality
+ORDER BY TOTAL DESC, nationality ASC;
+
+-- Sacamos los valores nulos
+SELECT nationality , COUNT(author_id) TOTAL
+FROM authors
+WHERE nationality IS NOT NULL
+GROUP BY nationality
+ORDER BY TOTAL DESC, nationality;
+
+-- Si no queremos los valores nullos ni los de Rusia, por ejemplo
+SELECT nationality , COUNT(author_id) TOTAL
+FROM authors
+WHERE nationality IS NOT NULL
+  AND nationality NOT IN('RUS')
+GROUP BY nationality
+ORDER BY TOTAL DESC, nationality;
+
+-- Igual que antes pero ahora sin Austria tambien.
+SELECT nationality , COUNT(author_id) TOTAL
+FROM authors
+WHERE nationality NOT IN ('RUS', 'AUT')
+GROUP BY  nationality
+ORDER BY TOTAL DESC, nationality;
+
+-- ¿Y si queremos solo a algunos paises puntuales? Eliminamos el NOT y usamos solo el IN.
+SELECT nationality , COUNT(author_id) TOTAL
+FROM authors
+WHERE nationality IN ('RUS', 'AUT')
+GROUP BY  nationality
+ORDER BY TOTAL DESC, nationality;
+
+```
 
 ## Consultas en MySQL

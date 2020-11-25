@@ -781,6 +781,31 @@ SELECT DISTINCT nationality FROM authors;
 SELECT DISTINCT nationality FROM authors ORDER BY nationality;
 ```
 
+```sql
+
+mysql> SELECT DISTINCT nationality FROM authors ORDER BY nationality;
++-------------+
+| nationality |
++-------------+
+| NULL        |
+| AUS         |
+| AUT         |
+| COL         |
+| DEU         |
+| ENG         |
+| ESP         |
+| FRA         |
+| GBR         |
+| IND         |
+| JAP         |
+| MEX         |
+| RUS         |
+| SWE         |
+| USA         |
++-------------+
+15 rows in set (0.00 sec)
+```
+
 #### COUNT | GROUP BY | ORDER BY | NOT IN | IN
 
 2. ¿Cuantos escritores hay de cada nacionalidad?
@@ -792,11 +817,55 @@ FROM authors
 GROUP BY nationality
 ORDER BY TOTAL DESC;
 
++-------------+-------+
+| nationality | TOTAL |
++-------------+-------+
+| NULL        |    71 |
+| USA         |    27 |
+| ENG         |    10 |
+| IND         |     6 |
+| RUS         |     4 |
+| FRA         |     3 |
+| SWE         |     2 |
+| AUT         |     2 |
+| MEX         |     1 |
+| JAP         |     1 |
+| ESP         |     1 |
+| DEU         |     1 |
+| COL         |     1 |
+| GBR         |     1 |
+| AUS         |     1 |
++-------------+-------+
+15 rows in set (0.00 sec)
+
+
 -- Igual que la query anterior pero le agregamos un segundo orden que es por nacionalidad
 SELECT nationality , COUNT(author_id) TOTAL
 FROM authors
 GROUP BY nationality
 ORDER BY TOTAL DESC, nationality ASC;
+
++-------------+-------+
+| nationality | TOTAL |
++-------------+-------+
+| NULL        |    71 |
+| USA         |    27 |
+| ENG         |    10 |
+| IND         |     6 |
+| RUS         |     4 |
+| FRA         |     3 |
+| AUT         |     2 |
+| SWE         |     2 |
+| AUS         |     1 |
+| COL         |     1 |
+| DEU         |     1 |
+| ESP         |     1 |
+| GBR         |     1 |
+| JAP         |     1 |
+| MEX         |     1 |
++-------------+-------+
+15 rows in set (0.00 sec)
+
 
 -- Sacamos los valores nulos
 SELECT nationality , COUNT(author_id) TOTAL
@@ -804,6 +873,27 @@ FROM authors
 WHERE nationality IS NOT NULL
 GROUP BY nationality
 ORDER BY TOTAL DESC, nationality;
+
++-------------+-------+
+| nationality | TOTAL |
++-------------+-------+
+| USA         |    27 |
+| ENG         |    10 |
+| IND         |     6 |
+| RUS         |     4 |
+| FRA         |     3 |
+| AUT         |     2 |
+| SWE         |     2 |
+| AUS         |     1 |
+| COL         |     1 |
+| DEU         |     1 |
+| ESP         |     1 |
+| GBR         |     1 |
+| JAP         |     1 |
+| MEX         |     1 |
++-------------+-------+
+14 rows in set (0.01 sec)
+
 
 -- Si no queremos los valores nullos ni los de Rusia, por ejemplo
 SELECT nationality , COUNT(author_id) TOTAL
@@ -813,6 +903,26 @@ WHERE nationality IS NOT NULL
 GROUP BY nationality
 ORDER BY TOTAL DESC, nationality;
 
++-------------+-------+
+| nationality | TOTAL |
++-------------+-------+
+| USA         |    27 |
+| ENG         |    10 |
+| IND         |     6 |
+| FRA         |     3 |
+| AUT         |     2 |
+| SWE         |     2 |
+| AUS         |     1 |
+| COL         |     1 |
+| DEU         |     1 |
+| ESP         |     1 |
+| GBR         |     1 |
+| JAP         |     1 |
+| MEX         |     1 |
++-------------+-------+
+13 rows in set (0.00 sec)
+
+
 -- Igual que antes pero ahora sin Austria tambien.
 SELECT nationality , COUNT(author_id) TOTAL
 FROM authors
@@ -820,12 +930,40 @@ WHERE nationality NOT IN ('RUS', 'AUT')
 GROUP BY  nationality
 ORDER BY TOTAL DESC, nationality;
 
++-------------+-------+
+| nationality | TOTAL |
++-------------+-------+
+| USA         |    27 |
+| ENG         |    10 |
+| IND         |     6 |
+| FRA         |     3 |
+| SWE         |     2 |
+| AUS         |     1 |
+| COL         |     1 |
+| DEU         |     1 |
+| ESP         |     1 |
+| GBR         |     1 |
+| JAP         |     1 |
+| MEX         |     1 |
++-------------+-------+
+12 rows in set (0.00 sec)
+
+
 -- ¿Y si queremos solo a algunos paises puntuales? Eliminamos el NOT y usamos solo el IN.
 SELECT nationality , COUNT(author_id) TOTAL
 FROM authors
 WHERE nationality IN ('RUS', 'AUT')
 GROUP BY  nationality
 ORDER BY TOTAL DESC, nationality;
+
++-------------+-------+
+| nationality | TOTAL |
++-------------+-------+
+| RUS         |     4 |
+| AUT         |     2 |
++-------------+-------+
+2 rows in set (0.00 sec)
+
 
 ```
 
@@ -838,6 +976,27 @@ INNER JOIN books
 WHERE authors.author_id = books.author_id
 GROUP BY authors.nationality
 ORDER BY TOTAL DESC;
+
++-------------+-------+
+| nationality | TOTAL |
++-------------+-------+
+| NULL        |   100 |
+| USA         |    36 |
+| ENG         |    16 |
+| SWE         |    11 |
+| RUS         |     9 |
+| IND         |     8 |
+| AUT         |     4 |
+| FRA         |     3 |
+| GBR         |     3 |
+| AUS         |     2 |
+| MEX         |     1 |
+| ESP         |     1 |
+| DEU         |     1 |
+| JAP         |     1 |
++-------------+-------+
+14 rows in set (0.00 sec)
+
 
 ```
 
@@ -854,6 +1013,27 @@ JOIN authors AS a
   ON a.author_id = b.author_id
 GROUP BY a.nationality
 ORDER BY promedio DESC;
+
++-------------+-----------+--------------------+
+| nationality | promedio  | std                |
++-------------+-----------+--------------------+
+| ENG         | 19.316875 |  5.822852306591247 |
+| NULL        | 18.151400 |  6.267859127325693 |
+| RUS         | 17.065556 |  4.747806771110475 |
+| IND         | 16.923750 |  4.226635593175736 |
+| FRA         | 16.900000 |  4.931531202375181 |
+| GBR         | 16.666667 |  8.289886743630591 |
+| AUS         | 15.820000 | 0.5199999999999996 |
+| USA         | 15.727500 | 4.2106600003905434 |
+| SWE         | 15.696364 | 1.2190254880419302 |
+| ESP         | 15.200000 |                  0 |
+| AUT         | 14.545000 | 1.9411530078795958 |
+| JAP         | 12.300000 |                  0 |
+| DEU         | 10.200000 |                  0 |
+| MEX         | 10.000000 |                  0 |
++-------------+-----------+--------------------+
+14 rows in set (0.00 sec)
+
 ```
 
 
@@ -869,7 +1049,28 @@ FROM books as b
 JOIN authors as a
    ON a.author_id = b.author_id
 GROUP BY  nationality
-ORDER BY libros DESC
+ORDER BY libros DESC;
+
++-------------+--------+-----------+--------------------+
+| nationality | libros | prom      | std                |
++-------------+--------+-----------+--------------------+
+| NULL        |    100 | 18.151400 |  6.267859127325693 |
+| USA         |     36 | 15.727500 | 4.2106600003905434 |
+| ENG         |     16 | 19.316875 |  5.822852306591247 |
+| SWE         |     11 | 15.696364 | 1.2190254880419302 |
+| RUS         |      9 | 17.065556 |  4.747806771110475 |
+| IND         |      8 | 16.923750 |  4.226635593175736 |
+| AUT         |      4 | 14.545000 | 1.9411530078795958 |
+| FRA         |      3 | 16.900000 |  4.931531202375181 |
+| GBR         |      3 | 16.666667 |  8.289886743630591 |
+| AUS         |      2 | 15.820000 | 0.5199999999999996 |
+| ESP         |      1 | 15.200000 |                  0 |
+| MEX         |      1 | 10.000000 |                  0 |
+| JAP         |      1 | 12.300000 |                  0 |
+| DEU         |      1 | 10.200000 |                  0 |
++-------------+--------+-----------+--------------------+
+14 rows in set (0.00 sec)
+
 ```
 
 #### MAX() y MIN()
@@ -882,7 +1083,27 @@ SELECT a.nationality, MAX(b.price), MIN(b.price)
 FROM books AS b
 JOIN authors AS a
   ON a.author_id = b.author_id
-GROUP BY a.nationality
+GROUP BY a.nationality;
+
++-------------+--------------+--------------+
+| nationality | MAX(b.price) | MIN(b.price) |
++-------------+--------------+--------------+
+| NULL        |        45.40 |         8.60 |
+| AUS         |        16.34 |        15.30 |
+| AUT         |        15.98 |        11.20 |
+| DEU         |        10.20 |        10.20 |
+| ENG         |        28.70 |        10.60 |
+| ESP         |        15.20 |        15.20 |
+| FRA         |        22.50 |        10.50 |
+| GBR         |        23.50 |         5.00 |
+| IND         |        23.60 |        10.50 |
+| JAP         |        12.30 |        12.30 |
+| MEX         |        10.00 |        10.00 |
+| RUS         |        26.34 |        10.99 |
+| SWE         |        18.58 |        15.00 |
+| USA         |        27.00 |        10.00 |
++-------------+--------------+--------------+
+14 rows in set (0.00 sec)
 
 ```
 
@@ -907,7 +1128,22 @@ LEFT JOIN clients AS c
 LEFT JOIN books AS b
   ON b.book_id = t.book_id
 LEFT JOIN authors AS a
-  ON b.author_id = a.author_id
+  ON b.author_id = a.author_id;
+
++-----------------------+--------+-------------------------------------+-------------------------+------+
+| name                  | type   | title                               | author                  | ago  |
++-----------------------+--------+-------------------------------------+-------------------------+------+
+| Maria Teresa Castillo | sell   | El llano en llamas                  | Juan Rulfo(MEX)         |   24 |
+| Luis Saez             | lend   | Talesof Mystery and Imagination     | Edgar Allen Poe(USA)    |   24 |
+| Jose Maria Bermudez   | sell   | Estudio en escarlata                | Arthur Conan Doyle(GBR) |   24 |
+| Rafael Galvez         | sell   | The Startup Playbook                | Sam Altman(USA)         |   24 |
+| Antonia Giron         | lend   | El llano en llamas                  | Juan Rulfo(MEX)         |   24 |
+| Antonia Giron         | return | El llano en llamas                  | Juan Rulfo(MEX)         |   24 |
+| Juana Maria Lopez     | sell   | Vol39 No. 1 Social Choice & Welfare | NULL                    |   24 |
++-----------------------+--------+-------------------------------------+-------------------------+------+
+7 rows in set (0.00 sec)
+
+
 ```
 
 ## Consultas en MySQL

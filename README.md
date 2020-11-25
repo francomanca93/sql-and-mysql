@@ -64,6 +64,7 @@ Con el curso de SQL se conocerá el lenguaje de consulta estructurada que te per
     - [Comandos UPDATE, DELETE y TRUNCATE](#comandos-update-delete-y-truncate)
   - [Consultas en MySQL](#consultas-en-mysql)
     - [Super QUERIES](#super-queries)
+    - [Comando mysqldump](#comando-mysqldump)
 
 # Curso de SQL y MySQL
 
@@ -1283,3 +1284,13 @@ GROUP BY nationality;
 12 rows in set (0.00 sec)
 
 ```
+
+### Comando mysqldump
+
+> “El esquema se versiona, los datos se respaldan”
+
+- El comando `mysqldump -u root -p nombre_de_base_de_datos` te arrastra todo el **schema y los datos de la base de datos**. Si lo hacemos de la siguiente manera: `mysqldump -u root -p nombre_de_base_de_datos > base_de_datos_completa.sql` podemos guardar la base de datos en un archivo.
+  
+- El comando `mysqldump -u root -p -d nombre_de_base_de_datos > esquema.sql` te permite crear un documento con solo el **schema de la BD**.
+
+Nota: Recordar que para los dos comandos anteriores deben realizarse en una terminal fuera de la BD y estar ubicados en el directorio donde se desea guardar el archivo.

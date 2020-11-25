@@ -61,6 +61,7 @@ Con el curso de SQL se conocerá el lenguaje de consulta estructurada que te per
       - [AVG() AS promedio | STDDEV() AS desviacion_estandar](#avg-as-promedio--stddev-as-desviacion_estandar)
       - [MAX() y MIN()](#max-y-min)
       - [CONCAT() | TO_DAY() | NOW() | Realizando un reporte](#concat--to_day--now--realizando-un-reporte)
+    - [Comandos UPDATE, DELETE y TRUNCATE](#comandos-update-delete-y-truncate)
   - [Consultas en MySQL](#consultas-en-mysql)
 
 # Curso de SQL y MySQL
@@ -1144,6 +1145,84 @@ LEFT JOIN authors AS a
 7 rows in set (0.00 sec)
 
 
+```
+
+### Comandos UPDATE, DELETE y TRUNCATE
+
+**Tips**:
+
+- Los datos no deberían borrarse, siempre y cuando se respete el acuerdo con el usuario final.
+- **SIEMPRE** usar **WHERE** con comandos **UPDATE** o **DELETE**.
+- Al hacer **UPDATE** o **DELETE** usar **LIMIT** para limitar el impacto del comando si algo saliese mal.
+
+Comandos:
+
+- `DELETE`: elimina información.
+- `UPDATE`: actualiza información en una tabla.
+- `TRUNCATE`: elimina el contenido de una tabla por completo.
+
+**Código**:
+
+```sql
+-- Ejemplos de Delete y Update
+
+DELETE FROM authors WHERE author_id = 161 LIMIT 1;
+
+----------------------------
+mysql> select count(*) from authors;
++----------+
+| count(*) |
++----------+
+|      132 |
++----------+
+1 row in set (0.00 sec)
+
+mysql> delete from authors where author_id = 161 limit 1;
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select count(*) from authors;
++----------+
+| count(*) |
++----------+
+|      131 |
++----------+
+1 row in set (0.00 sec)
+
+---------------------------------
+
+-- Selecciono las columnas que se muentras de la tabla clients donde active sea diferente de 1 (ó = 0)
+SELECT client_id, name FROM clients WHERE active <> 1;
+
+-- Actualizo el client_id 80 a un active = 0
+UPDATE clients SET active = 0 WHERE client_id = 80 LIMIT 1;
+
+-- Actualizo el mail del client_id 7
+UPDATE clients
+SET
+    email = 'javier@gmail.com'
+WHERE
+    client_id = 7
+LIMIT 1;
+
+--Desactivar clientes con ID especifica o apellido lopez
+
+UPDATE clients
+SET
+    active = 0
+WHERE
+    client_id IN (1,6,8,27)
+    OR name like '%Lopez%';
+
+-- Buscar con ID y Lopez
+
+SELECT client_id, name
+FROM clients
+WHERE
+    client_id IN (1,6,8,27)
+    OR name like '%Lopez%';
+
+-- Utilizando TRUNCATE eliminamos los datos de la table dejando la estructura de la misma unicamente.
+TRUNCATE transactions;
 ```
 
 ## Consultas en MySQL

@@ -56,6 +56,11 @@ Con el curso de SQL se conocerá el lenguaje de consulta estructurada que te per
       - [7. Outer excluding join](#7-outer-excluding-join)
       - [Resumen](#resumen)
     - [Casos de Negocios](#casos-de-negocios)
+      - [DICTINCT](#dictinct)
+      - [COUNT | GROUP BY | ORDER BY | NOT IN | IN](#count--group-by--order-by--not-in--in)
+      - [AVG() AS promedio | STDDEV() AS desviacion_estandar](#avg-as-promedio--stddev-as-desviacion_estandar)
+      - [MAX() y MIN()](#max-y-min)
+      - [CONCAT() | TO_DAY() | NOW() | Realizando un reporte](#concat--to_day--now--realizando-un-reporte)
   - [Consultas en MySQL](#consultas-en-mysql)
 
 # Curso de SQL y MySQL
@@ -759,6 +764,10 @@ WHERE A.Key IS NULL OR B.Key IS NULL
 
 ### Casos de Negocios
 
+En cada caso de negocio utilizaremos algunas funciones y atributos particulares de mysql para realizar los casos de negocios correspondientes. Los casos de negocios corresponden a preguntas que nosotros nos podemos hacer, la respuesta a las preguntas la podemos encontrar haciendo queries correctas a la base de datos, obteniendo la informacion que nosotros queremos.
+
+#### DICTINCT
+
 1. ¿Que nacionalidades hay?
 
 ```sql
@@ -771,6 +780,8 @@ SELECT DISTINCT nationality FROM authors;
 -- Si lo pasamos el parametro ORDER BY lo ordenará
 SELECT DISTINCT nationality FROM authors ORDER BY nationality;
 ```
+
+#### COUNT | GROUP BY | ORDER BY | NOT IN | IN
 
 2. ¿Cuantos escritores hay de cada nacionalidad?
 
@@ -830,6 +841,8 @@ ORDER BY TOTAL DESC;
 
 ```
 
+#### AVG() AS promedio | STDDEV() AS desviacion_estandar 
+
 4. ¿Cuál es el promedio/desviación estándar del precio de libros?
 
 ```sql
@@ -859,6 +872,8 @@ GROUP BY  nationality
 ORDER BY libros DESC
 ```
 
+#### MAX() y MIN()
+
 6. ¿Cuál es el precio máximo y mínimo de un libro?
 
 ```sql
@@ -870,6 +885,8 @@ JOIN authors AS a
 GROUP BY a.nationality
 
 ```
+
+#### CONCAT() | TO_DAY() | NOW() | Realizando un reporte
 
 7. ¿Cómo quedaría el reporte de préstamos?
 
@@ -892,6 +909,5 @@ LEFT JOIN books AS b
 LEFT JOIN authors AS a
   ON b.author_id = a.author_id
 ```
-
 
 ## Consultas en MySQL

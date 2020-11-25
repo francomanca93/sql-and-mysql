@@ -63,6 +63,7 @@ Con el curso de SQL se conocerá el lenguaje de consulta estructurada que te per
       - [CONCAT() | TO_DAY() | NOW() | Realizando un reporte](#concat--to_day--now--realizando-un-reporte)
     - [Comandos UPDATE, DELETE y TRUNCATE](#comandos-update-delete-y-truncate)
   - [Consultas en MySQL](#consultas-en-mysql)
+    - [Super QUERIES](#super-queries)
 
 # Curso de SQL y MySQL
 
@@ -1226,3 +1227,59 @@ TRUNCATE transactions;
 ```
 
 ## Consultas en MySQL
+
+### Super QUERIES
+
+Con **super QUERIES** lo que buscamos es darle inteligencia a las columnas.
+
+```sql
+-- SUM(), para sumar cada valor(1) en una tupla
+SELECT
+  COUNT(book_id),
+  SUM(IF(year < 1950, 1, 0)) AS `<1950`,
+  SUM(IF(year >= 1950 AND year < 1990, 1, 0)) AS `<1990`,
+  SUM(IF(year >= 1990 AND year < 2000, 1, 0)) AS `<2000`,
+  SUM(IF(year >= 2000, 1, 0)) AS `<hoy`
+FROM books;
+
++----------------+-------+-------+-------+------+
+| COUNT(book_id) | <1950 | <1990 | <2000 | <hoy |
++----------------+-------+-------+-------+------+
+|            197 |   186 |     1 |     8 |    2 |
++----------------+-------+-------+-------+------+
+1 row in set (0.00 sec)
+
+
+-- Agrupar el query anterior y mostrar su nacionalidad
+SELECT
+  nationality,
+  COUNT(book_id),
+  SUM(IF(year < 1950, 1, 0)) AS `<1950`,
+  SUM(IF(year >= 1950 AND year < 1990, 1, 0)) AS `<1990`,
+  SUM(IF(year >= 1990 AND year < 2000, 1, 0)) AS `<2000`,
+  SUM(IF(year >= 2000, 1, 0)) AS `<hoy`
+FROM books AS b
+JOIN authors AS a
+  ON a.author_id = b.author_id
+WHERE a.nationality IS NOT NULL
+GROUP BY nationality;
+
++-------------+----------------+-------+-------+-------+------+
+| nationality | COUNT(book_id) | <1950 | <1990 | <2000 | <hoy |
++-------------+----------------+-------+-------+-------+------+
+| AUS         |              2 |     2 |     0 |     0 |    0 |
+| AUT         |              4 |     4 |     0 |     0 |    0 |
+| DEU         |              1 |     1 |     0 |     0 |    0 |
+| ESP         |              1 |     1 |     0 |     0 |    0 |
+| FRA         |              3 |     3 |     0 |     0 |    0 |
+| GBR         |             19 |    19 |     0 |     0 |    0 |
+| IND         |              8 |     8 |     0 |     0 |    0 |
+| JAP         |              1 |     1 |     0 |     0 |    0 |
+| MEX         |              1 |     0 |     1 |     0 |    0 |
+| RUS         |              9 |     9 |     0 |     0 |    0 |
+| SWE         |             11 |     3 |     0 |     8 |    0 |
+| USA         |             36 |    34 |     0 |     0 |    2 |
++-------------+----------------+-------+-------+-------+------+
+12 rows in set (0.00 sec)
+
+```

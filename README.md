@@ -818,4 +818,80 @@ ORDER BY TOTAL DESC, nationality;
 
 ```
 
+3. ¿Cuantos libros hay de cada nacionalidad?
+
+```sql
+SELECT authors.nationality, COUNT(books.book_id) TOTAL
+FROM authors
+INNER JOIN books
+WHERE authors.author_id = books.author_id
+GROUP BY authors.nationality
+ORDER BY TOTAL DESC;
+
+```
+
+4. ¿Cuál es el promedio/desviación estándar del precio de libros?
+
+```sql
+SELECT a.nationality,  
+      AVG(b.price) AS promedio,
+      STDDEV(b.price) AS std
+FROM books AS b
+JOIN authors AS a
+  ON a.author_id = b.author_id
+GROUP BY a.nationality
+ORDER BY promedio DESC;
+```
+
+
+5. ¿Cuál es el promedio/desviación estándar de la cantidad de autores por nacionalidad?
+
+```sql
+-- Agrupar por la columna pivot.
+SELECT a.nationality,
+      COUNT(b.book_id) as libros,
+      AVG(b.price) as prom,
+      STDDEV(b.price) as std
+FROM books as b
+JOIN authors as a
+   ON a.author_id = b.author_id
+GROUP BY  nationality
+ORDER BY libros DESC
+```
+
+6. ¿Cuál es el precio máximo y mínimo de un libro?
+
+```sql
+
+SELECT a.nationality, MAX(b.price), MIN(b.price)
+FROM books AS b
+JOIN authors AS a
+  ON a.author_id = b.author_id
+GROUP BY a.nationality
+
+```
+
+7. ¿Cómo quedaría el reporte de préstamos?
+
+- Usamos CONCAT() para agregar una segunda columna a una primer columna.
+- TO_DAY(): Es una función que me dice cuantos dias han pasado desde el dia 00-00-0000 (Inicio del calendario gregoriano) hasta la fecha si se requiere con NOW().
+- Usamos en este caso TO_DAY() para saber hace cuanto se alquilo tal libro.
+
+```sql
+
+SELECT c.name,
+      t.type,
+      b.title,
+      CONCAT(a.name, "(", a. nationality, ")") as author,
+      TO_DAYS(NOW()) - TO_DAYS(t.created_at) AS ago
+FROM transactions AS t
+LEFT JOIN clients AS c
+  ON c.client_id = t.client_id
+LEFT JOIN books AS b
+  ON b.book_id = t.book_id
+LEFT JOIN authors AS a
+  ON b.author_id = a.author_id
+```
+
+
 ## Consultas en MySQL
